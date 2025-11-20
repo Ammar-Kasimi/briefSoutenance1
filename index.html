@@ -9,70 +9,179 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-red-300 flex">
-    <aside id="sidebare" class="flex items-center gap-[10px] flex-col bg-white h-screen w-1/5">
-        <button id="add-btn" class="bg-green-500 hand shadow-green-400 text-white shadow-md mt-[10px] w-3/5 h-[30px] rounded-md ">Add
-            employe</button>
-        <div class="shadow-xl/20 flex flex-col rounded-md w-9/10 bg-gray-200 h-[100px]" id="card1">
-            <p class="" id="name">Name: mouad srtati</p>
-            <p class="" id="email">Email: mouad@gmail.com</p>
-            <p class="" id="number">telephone: 0647382916</p>
-            <p class="" id="role">Role:Agent de securité</p>
-        </div>
-    </aside>
-    <div class="w-4/5  flex h-screen">
-        <div id=" 1st-section" class="flex flex-col  w-2/5">
-            <div id="conference-room " class="  bg-[url(/images/image1.png)] border-2 w-full h-3/10"></div>
-            <div id="reception-room " class="bg-[url(/images/image1.png)]   border-2 w-full h-7/10"></div>
-        </div>
-        <div id="2nd-section" class="w-1/5 bg-lime-300 border-2"></div>
-        <div id=" 3rd-section" class="flex flex-col w-2/5">
-            <div class="flex w-full h-2/5" id="upper-rooms">
-                <div id="archive-room " class="bg-[url(/images/image3.png)] border-2 w-1/2 h-full"></div>
-                <div id="staffroom " class="bg-[url(/images/image6.png)] border-2 w-1/2 h-full"></div>
+<body class=" flex flex-col ">
+    <header class="h-auto w-auto">
+
+        <nav class="bg-neutral-primary  w-full  border-b border-default">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
+                    <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Staff Manager</span>
+                </a>
+                <button data-collapse-toggle="navbar-default" type="button"
+                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+                    aria-controls="navbar-default" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="M5 7h14M5 12h14M5 17h14" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul
+                        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0"
+                                aria-current="page">Home</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">About</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Services</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Pricing</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Contact</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="h-1/5 border-2 bg-lime-300 w-full"></div>
-            <div class="flex h-2/5 w-full" id="lower-rooms">
-                <div id="sever-room " class=" bg-[url(/images/image5.png)] border-2 w-1/2 h-full"></div>
-                <div id="security-room " class="bg-[url(/images/image4.png)] border-2 w-1/2 h-full"></div>
+        </nav>
+
+    </header>
+    <div class="flex sm:max-md:flex-col sm:max-md:items-center mt-[10px]">
+        <aside id="sidebar" class=" flex justify-center bg-white h-full  w-1/2 md:w-1/3">
+            <div class="flex flex-col items-center w-27/28 shadow-xl/20 border-2 rounded-md gap-[10px] "
+                id="sidebar-container">
+                <button id="add-btn"
+                    class="bg-green-600 hand shadow-green-200 text-white shadow-md mt-[10px] w-3/5 h-[30px] rounded-md ">Add
+                    employe</button>
+                <div id="cards" class="w-full h-full flex-col flex items-center gap-[10px]">
+
+                </div>
             </div>
+        </aside>
+        <div class="w-2/3  flex flex-wrap sm:max-md:gap-[15px] h-screen">
+            <div id=" 1st-section" class="flex flex-col h-[500px]  w-full md:w-1/2 lg:w-1/3">
+                <div id="conference-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Conference Room</p>
+                </div>
+                <div id="reception-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Reception room</p>
+                </div>
+            </div>
+            <!-- <div id="2nd-section" class="w-1/5  border"></div> -->
+
+            <div class="flex flex-col w-full md:w-1/2 lg:w-1/3 h-[500px]" id="upper-rooms">
+                <div id="archive-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Archive Room</p>
+                </div>
+                <div id="staffroom " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Staff Room</p>
+                </div>
+            </div>
+            <!-- <div class="h-1/5 border  w-full"></div> -->
+            <div class="flex  sm:max-md:flex-col lg:flex-col md:max-lg:w-full  h-[500px] w-full  md:w-1/2 lg:w-1/3"
+                id="lower-rooms">
+                <div id="sever-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Server Room</p>
+                </div>
+                <div id="security-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Security Room</p>
+                </div>
+            </div>
+
         </div>
     </div>
-
     <div class="fixed hidden flex justify-center h-full w-full bg-green-300" id="modalcontainer">
-        <form action="" class=" flex flex-col bg-white w-1/3 bg-opacity-1/3 h-full inset-0" id="add-form">
+        <form action="" class=" flex flex-col  bg-white w-1/3 bg-opacity-1/3 h-full inset-0" id="add-form">
             <div class="flex justify-center">
                 <p id="form-title" class="text-2xl my-[20px]">Add an employe</>
             </div>
-         <div class="bg-gray-200 h-[300px] w-full flex-col flex">    
-            <label for="form-name" class="text-xl">Name:</label>
-            <input type="text" id="form-name" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
-                placeholder="name full-name">
-            <label for="form-email" class="text-xl">Email adress:</label>
-            <input type="text" id="form-email" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
-                placeholder="name@gmail.com">
-            <label for="form-number" class="text-xl">telephone:</label>
-            <input type="text" id="form-number" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
-                placeholder="1234567890">
-            <label for="roles" class="text-xl">Role</label>
-            <select id="roles" name="roles" class="rounded-sm bg-white w-3/4 border-2 h-[35px]" >
-                <option value="réceptionniste">Réceptionniste</option>
-                <option value="techniciens IT">Techniciens IT</option>
-                <option value="agent de sécurité">Agent de sécurité</option>
-                <option value="manager">Manager</option>
-                <option value="nettoyage">Nettoyage</option>
-                <option value="autres">autres</option>
-            </select>
-            <div class="flex justify-center w-full h-[100px] items-center">
-            <button class="bg-green-500 h-[40px] text-lg hand rounded-md w-1/2 text-white " id="submit-btn">Submit</button>
+            <div class="bg-gray-200  items-center w-full flex-col flex">
+                <label for="form-name" class="text-xl">Name:</label>
+                <input type="text" id="form-name" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
+                    placeholder="name full-name">
+                <p class="hidden text-red-500 " id="reg1">input is invalid</p>
+                <label for="form-email" class="text-xl">Email adress:</label>
+                <input type="text" id="form-email" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
+                    placeholder="name@gmail.com">
+                <p class="hidden text-red-500 " id="reg2">input is invalid</p>
+                <label for="form-number" class="text-xl">telephone:</label>
+                <input type="text" id="form-number" class="h-[30px] w-2/3 rounded-md border-2 bg-white"
+                    placeholder="1234567890">
+                <p class="hidden text-red-500 "id="reg3">input is invalid</p>
+                <label for="roles" class="text-xl">Role</label>
+                <select id="roles" name="roles" class="rounded-sm bg-white w-3/4 border-2 h-[35px]">
+                    <option value="réceptionniste">Réceptionniste</option>
+                    <option value="techniciens IT">Techniciens IT</option>
+                    <option value="agent de sécurité">Agent de sécurité</option>
+                    <option value="manager">Manager</option>
+                    <option value="nettoyage">Nettoyage</option>
+                    <option value="autres">autres</option>
+                </select>
+                <div class="flex justify-center w-full h-[100px] items-center">
+                    <button class="bg-green-500 h-[40px] text-lg hand rounded-md w-1/2 text-white "
+                        id="submit-btn">Submit</button>
+
+                </div>
             </div>
-        </div>
         </form>
 
     </div>
 
-    
+
     <script src="code.js"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="w-2/3  flex h-screen">
+            <div id=" 1st-section" class="flex flex-col  w-1/3">
+                <div id="conference-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Conference Room</p>
+                </div>
+                <div id="reception-room " class="border flex justify-center items-center bg-gray-200 w-full h-1/2">
+                    <p class="text-lg p-[10px] border rounded-sm">Reception room</p>
+                </div>
+            </div>
+             <div id="2nd-section" class="w-1/5  border"></div> -->
+<!-- <div id=" 3rd-section" class="flex flex-col w-2/3">
+                <div class="flex w-full h-1/2" id="upper-rooms">
+                    <div id="archive-room " class="border flex justify-center items-center bg-gray-200 w-1/2 h-full">
+                        <p class="text-lg p-[10px] border rounded-sm">Archive Room</p>
+                    </div>
+                    <div id="staffroom " class="border flex justify-center items-center bg-gray-200 w-1/2 h-full">
+                        <p class="text-lg p-[10px] border rounded-sm">Staff Room</p>
+                    </div>
+                </div>
+                <div class="h-1/5 border  w-full"></div> -->
+<!-- <div class="flex h-1/2 w-full" id="lower-rooms">
+                    <div id="sever-room " class="border flex justify-center items-center bg-gray-200 w-1/2 h-full">
+                        <p class="text-lg p-[10px] border rounded-sm">Server Room</p>
+                    </div>
+                    <div id="security-room " class="border flex justify-center items-center bg-gray-200 w-1/2 h-full">
+                        <p class="text-lg p-[10px] border rounded-sm">Security Room</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  -->

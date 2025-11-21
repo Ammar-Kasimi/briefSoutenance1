@@ -1,12 +1,14 @@
 let valid = [0, 0, 0]
 
-
 document.getElementById("add-btn").addEventListener("click", showform)
 document.getElementById("submit-btn").addEventListener("click", add_employe)
 document.getElementById("form-name").addEventListener("blur", checkvalid)
 document.getElementById("form-number").addEventListener("blur", checkvalid)
 document.getElementById("form-email").addEventListener("blur", checkvalid)
 document.getElementById("addexpbtn").addEventListener("click", add_experience)
+
+
+
 
 show_employes()
 
@@ -85,10 +87,10 @@ function show_employes() {
             card += `          
         <div class="card shadow-xl/20 flex sm:max-md:flex-col rounded-md w-19/20 bg-gray-200 h-full" id="${index}">
     <div class="flex flex-col  w-7/10">
-        <p class="" id="name${index}">Name: ${employe.name}</p>
-        <p class="" id="email${index}">Email: ${employe.email}</p>
-        <p class="" id="number${index}">telephone: ${employe.number}</p>
-        <p class="" id="role${index}">Role: ${employe.role}</p>
+        <p class="" id="Name${index}">Name: ${employe.name}</p>
+        <p class="" id="Email${index}">Email: ${employe.email}</p>
+        <p class="" id="Number${index}">telephone: ${employe.number}</p>
+        <p class="" id="Role${index}">Role: ${employe.role}</p>
     </div>
     <div class="md:flex-col flex sm:max-md:gap-[10px] sm:max-md:justify-center sm:max-md:w-full md:justify-evenly md:items-center  h-full md:w-3/10 ">
         <button class=" modifybtn bg-blue-500 w-full md:w-2/3 h-[30px] md:h-1/4 rounded-md hand">Modify</button>
@@ -191,7 +193,7 @@ function add_experience() {
 }
 function fillmodal() {
     const cards = document.querySelectorAll(".card");
-    console.log("works1");
+    
     cards.forEach(card => {
         card.addEventListener("click", (e) => {
             console.log("works");
@@ -224,20 +226,176 @@ function fillmodal() {
             expdata += ` <button id="back-btn" class=" bg-blue-500 w-full text-white md:w-1/2 h-[30px] rounded-md hand">go back</button>
             </div>`
             profile.innerHTML = expdata
+            hide_profile()
             localStorage.setItem("employes", JSON.stringify(list))
         })
     })
 
 }
+function hide_profile() {
+    document.getElementById("back-btn").addEventListener("click", () => {
+        document.getElementById("modal2container").classList.add("hidden")
+    })
+}
+function choose_room() {
+    const zonebuttons = document.querySelectorAll(".staffbtn");
+    console.log("works1");
+    zonebuttons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            console.log("WORKS");
+            
+            // let list = JSON.parse(localStorage.getItem("employes"))
+            const card_id = e.target.closest("div").getAttribute("id");
+            // const data = list.find(card => card.id == card_id)
+            console.log(card_id);
+            
+            if (card_id == "conference-room") {
+                available_staff(1)
+                console.log("works2");
+                
+            }
+            if (card_id == "reception-room") {
+                available_staff(2)
+                console.log("works2");
+                
+            }
+            if (card_id == "archive-room") {
+                available_staff(3)
+                console.log("works2");
+                
+            }
+            if (card_id == "staff-room") {
+                available_staff(4)
+                console.log("works2");
+                
+            }
+            if (card_id == "server-room") {
+                available_staff(5)
+                console.log("works2");
+                
+            }
+            if (card_id == "security-room") {
+                available_staff(6)
+                console.log("works2");
+                
+            }
+        })
+    })
+    
+    zone1 = []
+    zone2 = []
+    zone3 = []
+    zone4 = []
+    zone5 = []
+    zone6 = []
+
+}
+
+function available_staff(num) {
+    let list = JSON.parse(localStorage.getItem("employes"))
+    console.log("works3");
+    
+    if (num == 1) {
+        list.forEach(element => {
+            if (element.role == element.role == "manager" || element.role == "nettoyage") {
+                zone1.push(element)
+                show_staff(zone1)
+            }
+        });
+    }
+    if (num == 2) {
+        list.forEach(element => {
+            if (element.role == "réceptionniste" || element.role == "manager" || element.role == "nettoyage") {
+                zone2.push(element)
+                show_staff(zone2)
+            }
+        });
+    }
+    if (num == 3) {
+        list.forEach(element => {
+            if (element.role == element.role == "manager") {
+                zone3.push(element)
+                show_staff(zone3)
+            }
+        });
+    }
+    if (num == 4) {
+        list.forEach(element => {
+            if (element.role == element.role == "manager" || element.role == "nettoyage") {
+                zone4.push(element)
+                show_staff(zone4)
+            }
+        });
+    }
+    if (num == 5) {
+        list.forEach(element => {
+            if (element.role == "technicien IT" || element.role == "manager" || element.role == "nettoyage") {
+                zone5.push(element)
+                show_staff(zone5)
+            }
+        });
+    }
+    if (num == 6) {
+        list.forEach(element => {
+            if (element.role == "agent de sécurité" || element.role == "manager" || element.role == "nettoyage") {
+                zone6.push(element)
+                show_staff(zone6)
+            }
+        });
+    }
+
+}
+function show_staff(arr) {
+    console.log("works4");
+    
+    let card = ``
+    arr.forEach(e => {
+        card += `
+   <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full" id="${e.id}">
+    
+        <p class="" id="name${e.id}">Name: ${e.name}</p>
+        <p class="" id="email${e.id}">Email: ${e.email}</p>
+        <p class="" id="number${e.id}">telephone: ${e.number}</p>
+        <p class="" id="role${e.id}">Role: ${e.role}</p>
+
+    </div>
+   `
+    });
+    document.getElementById("available-staff").innerHTML = card
+    console.log("works5");
+    
+    document.getElementById("modal3container").classList.remove("hidden")
+}
+
+
+function renderzone() {
+        let zone1 = JSON.parse(localStorage.getItem("conference-room"))
+        let zone2 = JSON.parse(localStorage.getItem("reception-room"))
+        let zone3 = JSON.parse(localStorage.getItem("archive-room"))
+        let zone4 = JSON.parse(localStorage.getItem("staff-room"))
+        let zone5 = JSON.parse(localStorage.getItem("server-room"))
+        let zone6 = JSON.parse(localStorage.getItem("security-room"))
+
+        if (zone1 == null) {
+            zone1 = []
+            zone2 = []
+            zone3 = []
+            zone4 = []
+            zone5 = []
+            zone6 = []
+        }
+
+        let zones =document.querySelectorAll(".room-area")
+        zones.forEach(zone=>{
+            zone.addEventListener("click",(event)=>{
+                console.log(event.target.getAttribute("id"));
+                
+            })
+            
+        })
+
+    }
+
 
 fillmodal()
-// list.forEach(e => {
-//         addeddata+=
-//         `<div class="flex flex-col  w-7/10">
-//         <p class="" id="name${index}">Name: ${e.name}</p>
-//         <p class="" id="email${index}">Email: ${e.email}</p>
-//         <p class="" id="number${index}">telephone: ${e.number}</p>
-//         <p class="" id="role${index}">Role: ${e.role}< /p>
-//     </div>
-//         `
-//        });
+choose_room()

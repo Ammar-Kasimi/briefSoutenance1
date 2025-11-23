@@ -1,11 +1,27 @@
 let valid = [0, 0, 0]
 
+
+zone1 = []
+zone2 = []
+zone3 = []
+zone4 = []
+zone5 = []
+zone6 = []
+
+area1 = []
+area1 = []
+area1 = []
+area4 = []
+area5 = []
+area6 = []
+
 document.getElementById("add-btn").addEventListener("click", showform)
 document.getElementById("submit-btn").addEventListener("click", add_employe)
 document.getElementById("form-name").addEventListener("blur", checkvalid)
 document.getElementById("form-number").addEventListener("blur", checkvalid)
 document.getElementById("form-email").addEventListener("blur", checkvalid)
 document.getElementById("addexpbtn").addEventListener("click", add_experience)
+
 
 
 
@@ -87,10 +103,10 @@ function show_employes() {
             card += `          
         <div class="card shadow-xl/20 flex sm:max-md:flex-col rounded-md w-19/20 bg-gray-200 h-full" id="${index}">
     <div class="flex flex-col  w-7/10">
-        <p class="" id="Name${index}">Name: ${employe.name}</p>
-        <p class="" id="Email${index}">Email: ${employe.email}</p>
-        <p class="" id="Number${index}">telephone: ${employe.number}</p>
-        <p class="" id="Role${index}">Role: ${employe.role}</p>
+        <p class="">Name: ${employe.name}</p>
+        <p class="">Email: ${employe.email}</p>
+        <p class="">telephone: ${employe.number}</p>
+        <p class="">Role: ${employe.role}</p>
     </div>
     <div class="md:flex-col flex sm:max-md:gap-[10px] sm:max-md:justify-center sm:max-md:w-full md:justify-evenly md:items-center  h-full md:w-3/10 ">
         <button class=" modifybtn bg-blue-500 w-full md:w-2/3 h-[30px] md:h-1/4 rounded-md hand">Modify</button>
@@ -193,7 +209,7 @@ function add_experience() {
 }
 function fillmodal() {
     const cards = document.querySelectorAll(".card");
-    
+
     cards.forEach(card => {
         card.addEventListener("click", (e) => {
             console.log("works");
@@ -240,161 +256,210 @@ function hide_profile() {
 function choose_room() {
     const zonebuttons = document.querySelectorAll(".staffbtn");
     console.log("works1");
+    let zoneselection;
     zonebuttons.forEach(button => {
         button.addEventListener("click", (e) => {
             console.log("WORKS");
-            
             // let list = JSON.parse(localStorage.getItem("employes"))
             const card_id = e.target.closest("div").getAttribute("id");
             // const data = list.find(card => card.id == card_id)
             console.log(card_id);
-            
             if (card_id == "conference-room") {
-                available_staff(1)
+                zoneselection = document.getElementById("zone1");
+                available_staff(1, zoneselection)
                 console.log("works2");
-                
+
             }
             if (card_id == "reception-room") {
-                available_staff(2)
+                zoneselection = document.getElementById("zone2");
+                available_staff(2, zoneselection)
                 console.log("works2");
-                
+
             }
             if (card_id == "archive-room") {
-                available_staff(3)
+                zoneselection = document.getElementById("zone3");
+                available_staff(3, zoneselection)
                 console.log("works2");
-                
+
             }
             if (card_id == "staff-room") {
-                available_staff(4)
+                zoneselection = document.getElementById("zone4");
+                available_staff(4, zoneselection)
                 console.log("works2");
-                
+
             }
             if (card_id == "server-room") {
-                available_staff(5)
+                zoneselection = document.getElementById("zone5");
+                available_staff(5, zoneselection)
                 console.log("works2");
-                
+
             }
             if (card_id == "security-room") {
-                available_staff(6)
+                zoneselection = document.getElementById("zone6");
+                available_staff(6, zoneselection)
                 console.log("works2");
-                
+
             }
         })
     })
-    
-    zone1 = []
-    zone2 = []
-    zone3 = []
-    zone4 = []
-    zone5 = []
-    zone6 = []
+
+
 
 }
 
-function available_staff(num) {
+function available_staff(num, zoneselection) {
     let list = JSON.parse(localStorage.getItem("employes"))
     console.log("works3");
-    
+
     if (num == 1) {
+        zone1 = []
         list.forEach(element => {
-            if (element.role == element.role == "manager" || element.role == "nettoyage") {
+            if (element.role == "manager" || element.role == "nettoyage") {
                 zone1.push(element)
-                show_staff(zone1)
+                show_staff(zone1, zoneselection, list)
             }
         });
     }
     if (num == 2) {
+        zone2 = []
         list.forEach(element => {
             if (element.role == "réceptionniste" || element.role == "manager" || element.role == "nettoyage") {
                 zone2.push(element)
-                show_staff(zone2)
+                show_staff(zone2, zoneselection, list)
             }
         });
     }
     if (num == 3) {
+        zone3 = []
         list.forEach(element => {
-            if (element.role == element.role == "manager") {
+            if (element.role == "manager") {
                 zone3.push(element)
-                show_staff(zone3)
+                show_staff(zone3, zoneselection, list)
             }
         });
     }
     if (num == 4) {
+        zone4 = []
         list.forEach(element => {
-            if (element.role == element.role == "manager" || element.role == "nettoyage") {
+            if (element.role == "manager" || element.role == "nettoyage") {
                 zone4.push(element)
-                show_staff(zone4)
+                show_staff(zone4, zoneselection, list)
             }
         });
     }
     if (num == 5) {
+        zone5 = []
         list.forEach(element => {
             if (element.role == "technicien IT" || element.role == "manager" || element.role == "nettoyage") {
                 zone5.push(element)
-                show_staff(zone5)
+                show_staff(zone5, zoneselection, list)
             }
         });
     }
     if (num == 6) {
+        zone6 = []
         list.forEach(element => {
             if (element.role == "agent de sécurité" || element.role == "manager" || element.role == "nettoyage") {
                 zone6.push(element)
-                show_staff(zone6)
+                show_staff(zone6, zoneselection, list)
             }
         });
     }
 
 }
-function show_staff(arr) {
-    console.log("works4");
-    
-    let card = ``
-    arr.forEach(e => {
-        card += `
-   <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full" id="${e.id}">
-    
-        <p class="" id="name${e.id}">Name: ${e.name}</p>
-        <p class="" id="email${e.id}">Email: ${e.email}</p>
-        <p class="" id="number${e.id}">telephone: ${e.number}</p>
-        <p class="" id="role${e.id}">Role: ${e.role}</p>
 
+const CARD = document.getElementById("available-staff");
+function show_staff(arr, zoneselection, list) {
+    CARD.innerHTML = "";
+    arr.forEach(e => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+   <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${e.id}">
+    
+        <p class="">Name: ${e.name}</p>
+        <p class="" >Email: ${e.email}</p>
+        <p class="" >telephone: ${e.number}</p>
+        <p class="">Role: ${e.role}</p>
     </div>
    `
+        div.classList.add("w-full", "flex", "justify-center")
+        CARD.appendChild(div);
+
     });
-    document.getElementById("available-staff").innerHTML = card
-    console.log("works5");
-    
+    CARD.innerHTML += `     <button class="close-btn bg-blue-500  h-[30px] text-white w-1/3 hand rounded-md p-[5px]">Close</button>`
     document.getElementById("modal3container").classList.remove("hidden")
+    document.querySelector(".close-btn").addEventListener("click", close_zone_modal)
+    // 
+    selection_staff(CARD, arr, zoneselection, list);
+}
+function selection_staff(CARD, arr, zoneselection, list) {
+
+
+    const workers = CARD.querySelectorAll(".worker");
+    workers.forEach(Worker => {
+        Worker.addEventListener("click", (e) => {
+            const workerid = e.currentTarget.dataset.id;
+            console.log(zoneselection)
+            const currentWorker = arr.find(Worker => Worker.id === parseInt(workerid));
+            const currentlist = list.findIndex(list => list.id === parseInt(workerid))
+            const currentWorkerid = arr.findIndex(Worker => Worker.id === parseInt(workerid));
+
+            zoneselection.innerHTML += `
+            <div class="shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${currentWorker.id}">
+    
+        <p class="">Name: ${currentWorker.name}</p>
+        <p class="" >Email: ${currentWorker.email}</p>
+        <p class="" >telephone: ${currentWorker.number}</p>
+        <p class="">Role: ${currentWorker.role}</p>
+    </div>
+         `
+            arr.splice(currentWorkerid, 1)
+            
+            list.splice(currentlist, 1)
+            localStorage.setItem("employes", JSON.stringify(list))
+            Worker.remove();
+            show_employes()
+        }
+        )
+    })
+
 }
 
 
-function renderzone() {
-        let zone1 = JSON.parse(localStorage.getItem("conference-room"))
-        let zone2 = JSON.parse(localStorage.getItem("reception-room"))
-        let zone3 = JSON.parse(localStorage.getItem("archive-room"))
-        let zone4 = JSON.parse(localStorage.getItem("staff-room"))
-        let zone5 = JSON.parse(localStorage.getItem("server-room"))
-        let zone6 = JSON.parse(localStorage.getItem("security-room"))
 
-        if (zone1 == null) {
-            zone1 = []
-            zone2 = []
-            zone3 = []
-            zone4 = []
-            zone5 = []
-            zone6 = []
-        }
 
-        let zones =document.querySelectorAll(".room-area")
-        zones.forEach(zone=>{
-            zone.addEventListener("click",(event)=>{
-                console.log(event.target.getAttribute("id"));
-                
-            })
-            
-        })
 
-    }
+
+// function renderzone() {
+//         let zone1 = JSON.parse(localStorage.getItem("conference-room"))
+//         let zone2 = JSON.parse(localStorage.getItem("reception-room"))
+//         let zone3 = JSON.parse(localStorage.getItem("archive-room"))
+//         let zone4 = JSON.parse(localStorage.getItem("staff-room"))
+//         let zone5 = JSON.parse(localStorage.getItem("server-room"))
+//         let zone6 = JSON.parse(localStorage.getItem("security-room"))
+
+//         if (zone1 == null) {
+//             zone1 = []
+//             zone2 = []
+//             zone3 = []
+//             zone4 = []
+//             zone5 = []
+//             zone6 = []
+//         }
+
+//         let zones =document.querySelectorAll(".room-area")
+//         zones.forEach(zone=>{
+//             zone.addEventListener("click",(event)=>{
+//                 console.log(event.target.getAttribute("id"));
+
+//             })
+
+//         })
+//     }
+
+function close_zone_modal() {
+    document.getElementById("modal3container").classList.add("hidden")
+}
 
 
 fillmodal()

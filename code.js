@@ -81,6 +81,7 @@ function add_employe(event) {
             email: document.getElementById("form-email").value,
             role: document.getElementById("roles").value,
             id: count,
+            icon: document.getElementById("form-icon").value,
             experiences: exps
         }
         count++
@@ -98,17 +99,18 @@ function show_employes() {
     if (list != null) {
         let card = ""
 
-        list.forEach((employe, index) => {
+        list.forEach((employe) => {
 
             card += `          
-        <div class="card shadow-xl/20 flex sm:max-md:flex-col rounded-md w-19/20 bg-gray-200 h-full" id="${index}">
+        <div class="card shadow-xl/20 flex sm:max-md:flex-col rounded-md w-19/20 bg-gray-200 h-full" id="${employe.id}">
     <div class="flex flex-col  w-7/10">
+            <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${employe.icon}" alt="">
         <p class="">Name: ${employe.name}</p>
         <p class="">Email: ${employe.email}</p>
         <p class="">telephone: ${employe.number}</p>
         <p class="">Role: ${employe.role}</p>
     </div>
-    <div class="md:flex-col flex sm:max-md:gap-[10px] sm:max-md:justify-center sm:max-md:w-full md:justify-evenly md:items-center  h-full md:w-3/10 ">
+    <div class="md:flex-col flex self-center sm:max-md:gap-[10px] h-[97px] sm:max-md:justify-center sm:max-md:w-full md:justify-evenly md:items-center   md:w-3/10 ">
         <button class=" modifybtn bg-blue-500 w-full md:w-2/3 h-[30px] md:h-1/4 rounded-md hand">Modify</button>
         <button class=" deletebtn bg-red-500 w-full md:w-2/3 h-[30px] md:h-1/4 rounded-md hand">delete</button>
     </div>
@@ -209,13 +211,16 @@ function add_experience() {
 }
 function fillmodal() {
     const cards = document.querySelectorAll(".card");
-
+    let list = JSON.parse(localStorage.getItem("employes"))
+    console.log(list);
     cards.forEach(card => {
         card.addEventListener("click", (e) => {
             console.log("works");
-            let list = JSON.parse(localStorage.getItem("employes"))
+
             const card_id = e.currentTarget.getAttribute("id");
-            const data = list.find(card => card.id == card_id)
+            let data = list.find(card => card.id == card_id)
+            console.log(card.id);
+            console.log(card_id);
             console.log(data);
             document.getElementById("modal2container").classList.remove("hidden")
             let profile = document.getElementById("profilecard")
@@ -243,6 +248,12 @@ function fillmodal() {
             </div>`
             profile.innerHTML = expdata
             hide_profile()
+            document.querySelectorAll(".deletebtn").forEach(el=>
+                el.addEventListener("click",(ele)=>{
+                    ele.stopPropagation()
+                    let deletedcard=list.find(card=>card.id==)
+                })
+            )
             localStorage.setItem("employes", JSON.stringify(list))
         })
     })
@@ -260,7 +271,8 @@ function choose_room() {
     zonebuttons.forEach(button => {
         button.addEventListener("click", (e) => {
             console.log("WORKS");
-            // let list = JSON.parse(localStorage.getItem("employes"))
+            // let list = JSON.parse(l
+            // ocalStorage.getItem("employes"))
             const card_id = e.target.closest("div").getAttribute("id");
             // const data = list.find(card => card.id == card_id)
             console.log(card_id);
@@ -365,7 +377,9 @@ function available_staff(num, zoneselection) {
             }
         });
     }
-
+    if (list != null) {
+        localStorage.setItem("employes", JSON.stringify(list))
+    }
 }
 
 const card2 = document.getElementById("available-staff");
@@ -375,7 +389,8 @@ function show_staff(arr, zoneselection, list, num) {
         const containerr = document.createElement("div");
         containerr.innerHTML = `
    <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${e.id}">
-    
+        <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${e.icon}" alt="">
+
         <p class="">Name: ${e.name}</p>
         <p class="" >Email: ${e.email}</p>
         <p class="" >telephone: ${e.number}</p>
@@ -401,82 +416,146 @@ function selection_staff(card2, arr, zoneselection, list, num) {
             const workerid = e.currentTarget.dataset.id;
             console.log(zoneselection)
             const currentWorker = arr.find(Worker => Worker.id === parseInt(workerid));
-            const currentlist = list.findIndex(list => list.id === parseInt(workerid))
+            const currentlistIndex = list.findIndex(list => list.id === parseInt(workerid))
+            const currentlist = list.find(list => list.id === parseInt(workerid))
             const currentWorkerid = arr.findIndex(Worker => Worker.id === parseInt(workerid));
 
             zoneselection.innerHTML += `
-            <div class="shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${currentWorker.id}">
-    
-        <p class="">Name: ${currentWorker.name}</p>
-        <p class="" >Email: ${currentWorker.email}</p>
-        <p class="" >telephone: ${currentWorker.number}</p>
-        <p class="">Role: ${currentWorker.role}</p>
+            <div class="shadow-xl/40 flex flex-col border-2 w-2/5 rounded-md  bg-gray-200 h-full worker" data-id="${currentWorker.id}">
+        <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${currentWorker.icon}" alt="">
+
+        <p class="text-xs">Name: ${currentWorker.name}</p>
+        <p class="text-xs" >Email: ${currentWorker.email}</p>
+        <p class="text-xs" >telephone: ${currentWorker.number}</p>
+        <p class="text-xs">Role: ${currentWorker.role}</p>
     </div>
          `
+            let list2 = [[], [], [], [], [], [], []]
+            console.log(list2);
             if (JSON.parse(localStorage.getItem("zones")) != null) {
                 list2 = JSON.parse(localStorage.getItem("zones"))
             }
-            let currentId = currentWorker.dataset.id
+
+
+
+
             let datazone =
             {
-                name: list[currentId].name,
-                number: list[currentId].number,
-                email: list[currentId].email,
-                role: list[currentId].role,
-                id: currentId,
+                name: currentlist.name,
+                number: currentlist.number,
+                email: currentlist.email,
+                role: currentlist.role,
+                id: Worker.id,
                 room: num
             }
+            console.log(list2[num]);
 
             list2[num].push(datazone)
             localStorage.setItem("zones", JSON.stringify(list2))
             arr.splice(currentWorkerid, 1)
-            list.splice(currentlist, 1)
+            list.splice(currentlistIndex, 1)
             localStorage.setItem("employes", JSON.stringify(list))
             Worker.remove();
             show_employes()
+            showzones()
         }
         )
     })
 
 }
 function showzones() {
+    console.log("begins");
+
+    document.getElementById("zone1").innerHTML = ""
+    document.getElementById("zone2").innerHTML = ""
+    document.getElementById("zone3").innerHTML = ""
+    document.getElementById("zone4").innerHTML = ""
+    document.getElementById("zone5").innerHTML = ""
+    document.getElementById("zone6").innerHTML = ""
     if (JSON.parse(localStorage.getItem("zones")) != null) {
-        list = JSON.parse(localStorage.getItem("zones"))
-    }
-    list.forEach(card => {
-        card.forEach(element => {
-            switch (element.room) {
-                case 1:
-                    document.getElementById("").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${currentWorker.id}">
-        <p class="">Name: ${element.name}</p>
-        <p class="" >Email: ${element.email}</p>
-        <p class="" >telephone: ${element.number}</p>
-        <p class="">Role: ${element.role}</p>
+        let list = JSON.parse(localStorage.getItem("zones"))
+
+
+        list.forEach(card => {
+            card.forEach(element => {
+                switch (element.room) {
+                    case 1:
+
+                        document.getElementById("zone1").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
+
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
-                    break;
-                case 1:
+                        break;
+                    case 2:
 
-                    break;
-                case 1:
+                        document.getElementById("zone2").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
 
-                    break;
-                case 1:
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
+    </div>`
 
-                    break;
-                case 1:
+                        break;
+                    case 3:
 
-                    break;
-                case 1:
+                        document.getElementById("zone3").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
 
-                    break;
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
+    </div>`
+                        break;
+                    case 4:
 
-                default:
-                    break;
-            }
-        });
-    })
+                        document.getElementById("zone4").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
 
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
+    </div>`
+                        break;
+                    case 5:
+
+                        document.getElementById("zone5").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
+
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
+    </div>`
+                        break;
+                    case 6:
+
+                        document.getElementById("zone6").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
+
+        <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
+        
+        <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
+    </div>`
+                        break;
+
+
+                    default:
+                        break;
+                }
+            });
+        })
+        localStorage.setItem("zones", JSON.stringify(list))
+        console.log("suuuuu");
+    }
 }
 
 
@@ -518,3 +597,4 @@ function close_zone_modal() {
 
 fillmodal()
 choose_room()
+showzones()

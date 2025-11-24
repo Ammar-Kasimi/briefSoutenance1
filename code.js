@@ -316,7 +316,7 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "manager" || element.role == "nettoyage") {
                 zone1.push(element)
-                show_staff(zone1, zoneselection, list)
+                show_staff(zone1, zoneselection, list, num)
             }
         });
     }
@@ -325,7 +325,7 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "réceptionniste" || element.role == "manager" || element.role == "nettoyage") {
                 zone2.push(element)
-                show_staff(zone2, zoneselection, list)
+                show_staff(zone2, zoneselection, list, num)
             }
         });
     }
@@ -334,7 +334,7 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "manager") {
                 zone3.push(element)
-                show_staff(zone3, zoneselection, list)
+                show_staff(zone3, zoneselection, list, num)
             }
         });
     }
@@ -343,7 +343,7 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "manager" || element.role == "nettoyage") {
                 zone4.push(element)
-                show_staff(zone4, zoneselection, list)
+                show_staff(zone4, zoneselection, list, num)
             }
         });
     }
@@ -352,7 +352,7 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "technicien IT" || element.role == "manager" || element.role == "nettoyage") {
                 zone5.push(element)
-                show_staff(zone5, zoneselection, list)
+                show_staff(zone5, zoneselection, list, num)
             }
         });
     }
@@ -361,19 +361,19 @@ function available_staff(num, zoneselection) {
         list.forEach(element => {
             if (element.role == "agent de sécurité" || element.role == "manager" || element.role == "nettoyage") {
                 zone6.push(element)
-                show_staff(zone6, zoneselection, list)
+                show_staff(zone6, zoneselection, list, num)
             }
         });
     }
 
 }
 
-const CARD = document.getElementById("available-staff");
-function show_staff(arr, zoneselection, list) {
-    CARD.innerHTML = "";
+const card2 = document.getElementById("available-staff");
+function show_staff(arr, zoneselection, list, num) {
+    card2.innerHTML = "";
     arr.forEach(e => {
-        const div = document.createElement("div");
-        div.innerHTML = `
+        const containerr = document.createElement("div");
+        containerr.innerHTML = `
    <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${e.id}">
     
         <p class="">Name: ${e.name}</p>
@@ -382,20 +382,20 @@ function show_staff(arr, zoneselection, list) {
         <p class="">Role: ${e.role}</p>
     </div>
    `
-        div.classList.add("w-full", "flex", "justify-center")
-        CARD.appendChild(div);
+        containerr.classList.add("w-full", "flex", "justify-center")
+        card2.appendChild(containerr);
 
     });
-    CARD.innerHTML += `     <button class="close-btn bg-blue-500  h-[30px] text-white w-1/3 hand rounded-md p-[5px]">Close</button>`
+    card2.innerHTML += `     <button class="close-btn bg-blue-500  h-[30px] text-white w-1/3 hand rounded-md p-[5px]">Close</button>`
     document.getElementById("modal3container").classList.remove("hidden")
     document.querySelector(".close-btn").addEventListener("click", close_zone_modal)
     // 
-    selection_staff(CARD, arr, zoneselection, list);
+    selection_staff(card2, arr, zoneselection, list, num);
 }
-function selection_staff(CARD, arr, zoneselection, list) {
+function selection_staff(card2, arr, zoneselection, list, num) {
 
 
-    const workers = CARD.querySelectorAll(".worker");
+    const workers = card2.querySelectorAll(".worker");
     workers.forEach(Worker => {
         Worker.addEventListener("click", (e) => {
             const workerid = e.currentTarget.dataset.id;
@@ -413,14 +413,68 @@ function selection_staff(CARD, arr, zoneselection, list) {
         <p class="">Role: ${currentWorker.role}</p>
     </div>
          `
+            if (JSON.parse(localStorage.getItem("zones")) != null) {
+                list2 = JSON.parse(localStorage.getItem("zones"))
+            }
+            let currentId = currentWorker.dataset.id
+            let datazone =
+            {
+                name: list[currentId].name,
+                number: list[currentId].number,
+                email: list[currentId].email,
+                role: list[currentId].role,
+                id: currentId,
+                room: num
+            }
+
+            list2[num].push(datazone)
+            localStorage.setItem("zones", JSON.stringify(list2))
             arr.splice(currentWorkerid, 1)
-            
             list.splice(currentlist, 1)
             localStorage.setItem("employes", JSON.stringify(list))
             Worker.remove();
             show_employes()
         }
         )
+    })
+
+}
+function showzones() {
+    if (JSON.parse(localStorage.getItem("zones")) != null) {
+        list = JSON.parse(localStorage.getItem("zones"))
+    }
+    list.forEach(card => {
+        card.forEach(element => {
+            switch (element.room) {
+                case 1:
+                    document.getElementById("").innerHTML += `
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${currentWorker.id}">
+        <p class="">Name: ${element.name}</p>
+        <p class="" >Email: ${element.email}</p>
+        <p class="" >telephone: ${element.number}</p>
+        <p class="">Role: ${element.role}</p>
+    </div>`
+                    break;
+                case 1:
+
+                    break;
+                case 1:
+
+                    break;
+                case 1:
+
+                    break;
+                case 1:
+
+                    break;
+                case 1:
+
+                    break;
+
+                default:
+                    break;
+            }
+        });
     })
 
 }

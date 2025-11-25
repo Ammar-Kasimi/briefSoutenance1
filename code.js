@@ -17,10 +17,15 @@ area6 = []
 
 document.getElementById("add-btn").addEventListener("click", showform)
 document.getElementById("submit-btn").addEventListener("click", add_employe)
+
 document.getElementById("form-name").addEventListener("blur", checkvalid)
 document.getElementById("form-number").addEventListener("blur", checkvalid)
 document.getElementById("form-email").addEventListener("blur", checkvalid)
 document.getElementById("addexpbtn").addEventListener("click", add_experience)
+document.getElementById("cancel-btn").addEventListener("click", (e)=>{
+    e.preventDefault()
+    hideform()
+})
 
 
 
@@ -120,6 +125,7 @@ function show_employes() {
         });
         document.getElementById("cards").innerHTML = card
         localStorage.setItem("employes", JSON.stringify(list))
+        fillmodal()
     }
 }
 function checkvalid(e) {
@@ -230,11 +236,11 @@ function fillmodal() {
         <p class="text-lg font-bold" id="email${card_id}"><span class="text-blue-500">Email:</span> ${data.email}</p>
         <p class="text-lg font-bold" id="number${card_id}"><span class="text-blue-500">telephone:</span> ${data.number}</p>
         <p class="text-lg font-bold" id="role${card_id}"><span class="text-blue-500">Role:</span> ${data.role}</p>
-        <p class="text-2xl font-bold" >Experience proffessionels</p>
+        <p class="font-bold text-2xl">Experiences professionels</p>
 
         `;
 
-            list[card_id].experiences.forEach(ele => {
+            data.experiences.forEach(ele => {
                 expdata += `
                 <p class="text-lg font-bold" ><span class="text-blue-500">company:</span> ${ele.comp}</p>
                 <div class="flex gap-[10px] h-full w-full>
@@ -248,16 +254,25 @@ function fillmodal() {
             </div>`
             profile.innerHTML = expdata
             hide_profile()
-            document.querySelectorAll(".deletebtn").forEach(el=>
-                el.addEventListener("click",(ele)=>{
-                    ele.stopPropagation()
-                    let deletedcard=list.find(card=>card.id==)
-                })
-            )
+
             localStorage.setItem("employes", JSON.stringify(list))
         })
     })
+    document.querySelectorAll(".deletebtn").forEach(el =>
+        el.addEventListener("click", (ele) => {
+            ele.stopPropagation()
+            let list2 = JSON.parse(localStorage.getItem("employes"))
 
+            console.log(list2);
+
+            let deletedcard = list2.findIndex(card => card.id == el.closest(".card").getAttribute('id'))
+            list2.splice(deletedcard, 1)
+            localStorage.setItem("employes", JSON.stringify(list2))
+            console.log("deleted");
+
+            show_employes()
+        })
+    )
 }
 function hide_profile() {
     document.getElementById("back-btn").addEventListener("click", () => {
@@ -382,12 +397,12 @@ function available_staff(num, zoneselection) {
     }
 }
 
-const card2 = document.getElementById("available-staff");
+// const card2 = document.getElementById("available-staff");
 function show_staff(arr, zoneselection, list, num) {
-    card2.innerHTML = "";
+    let card2=""
+   
     arr.forEach(e => {
-        const containerr = document.createElement("div");
-        containerr.innerHTML = `
+   card2+= `
    <div class=" shadow-xl/40 flex flex-col border-2 w-4/5 rounded-md  bg-gray-200 h-full worker" data-id="${e.id}">
         <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${e.icon}" alt="">
 
@@ -397,20 +412,18 @@ function show_staff(arr, zoneselection, list, num) {
         <p class="">Role: ${e.role}</p>
     </div>
    `
-        containerr.classList.add("w-full", "flex", "justify-center")
-        card2.appendChild(containerr);
-
     });
-    card2.innerHTML += `     <button class="close-btn bg-blue-500  h-[30px] text-white w-1/3 hand rounded-md p-[5px]">Close</button>`
+    card2+= `     <button class="close-btn bg-blue-500  h-[30px] text-white w-1/3 hand rounded-md p-[5px]">Close</button>`
+    document.getElementById("available-staff").innerHTML=card2 
     document.getElementById("modal3container").classList.remove("hidden")
     document.querySelector(".close-btn").addEventListener("click", close_zone_modal)
     // 
-    selection_staff(card2, arr, zoneselection, list, num);
+    selection_staff( arr, zoneselection, list, num);
 }
-function selection_staff(card2, arr, zoneselection, list, num) {
+function selection_staff( arr, zoneselection, list, num) {
 
 
-    const workers = card2.querySelectorAll(".worker");
+    const workers = document.getElementById("available-staff").querySelectorAll(".worker");
     workers.forEach(Worker => {
         Worker.addEventListener("click", (e) => {
             const workerid = e.currentTarget.dataset.id;
@@ -445,6 +458,7 @@ function selection_staff(card2, arr, zoneselection, list, num) {
                 number: currentlist.number,
                 email: currentlist.email,
                 role: currentlist.role,
+                icon:currentlist.icon,
                 id: Worker.id,
                 room: num
             }
@@ -478,26 +492,23 @@ function showzones() {
 
         list.forEach(card => {
             card.forEach(element => {
+                
                 switch (element.room) {
                     case 1:
 
                         document.getElementById("zone1").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
                         break;
                     case 2:
 
                         document.getElementById("zone2").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
 
@@ -505,44 +516,37 @@ function showzones() {
                     case 3:
 
                         document.getElementById("zone3").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
                         break;
                     case 4:
 
                         document.getElementById("zone4").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
                         break;
                     case 5:
 
                         document.getElementById("zone5").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
                         break;
                     case 6:
 
                         document.getElementById("zone6").innerHTML += `
-    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 rounded-md  bg-gray-200  worker">
-                <img class="aspect-square rounded-full h-[65px] w-[65px]" src="${element.icon}" alt="">
-
+    <div class="shadow-xl/40 flex flex-col border-2 w-4/9 h-4/9 rounded-md  bg-gray-200  worker">
+                <img class="aspect-square rounded-full h-[40px] w-[40px]" src="${element.icon}" alt="">
         <p class="text-xs"><span class="text-blue-700 font-bold">Name:</span> ${element.name}</p>
-        
+    
         <p class="text-xs"><span class="text-blue-700 font-bold">Role:</span> ${element.role}</p>
     </div>`
                         break;
